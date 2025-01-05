@@ -9,167 +9,108 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
-  final _formKey = GlobalKey<FormState>();
-  final userControl = new TextEditingController();
-  final passwordControl = new TextEditingController();
-
-  bool showPassword = true;
-  void visiblePassword() {
-    setState(() {
-      showPassword = !showPassword;
-    });
-  }
-
+      bool _password = true;
+    void showPassword() {
+      setState(
+        () {
+          _password = !_password;
+        },
+      );
+    }
   @override
   Widget build(BuildContext context) {
-    Widget UserText() {
-      return Padding(
-        padding: const EdgeInsets.only(top: 40),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7,
-          height: 50,
-          child: TextFormField(
-            controller: userControl,
-            decoration: InputDecoration(
+
+
+    Widget emailText() {
+      return Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: 50,
+        child: TextField(
+          decoration: InputDecoration(
+              filled: true,
+              fillColor: Color.fromARGB(255, 240, 236, 236),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(
-                  26,
+                  10,
                 ),
                 borderSide: BorderSide.none,
               ),
-              filled: true,
-              fillColor: Color.fromARGB(255, 216, 215, 215),
-              prefixIcon: Padding(
-                padding: const EdgeInsets.only(
-                  left: 8,
-                ),
-                child: Icon(
-                  Icons.person,
-                  color: Colors.green,
-                ),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 0,
               ),
-              hintText: 'Username',
-            ),
-            validator: (value) {
-              return (value == null || value.isEmpty)
-                  ? 'Please enter username'
-                  : null;
-            },
-          ),
+              prefixIcon: Icon(
+                Icons.email_outlined,
+                color: Colors.grey,
+              ),
+              hintText: 'exampleemail@gmail.com',
+              hintStyle: TextStyle(color: Color.fromARGB(255, 200, 198, 198))),
         ),
       );
     }
 
-    Widget Password() {
-      return Padding(
-        padding: const EdgeInsets.only(
-          top: 15,
-        ),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7,
-          height: 50,
-          child: TextFormField(
-            obscureText: showPassword,
-            controller: passwordControl,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  26,
-                ),
-                borderSide: BorderSide.none,
+    Widget passwordText() {
+      return Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: 50,
+        child: TextField(
+          obscureText: _password,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Color.fromARGB(255, 240, 236, 236),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+                10,
               ),
-              filled: true,
-              fillColor: Color.fromARGB(255, 216, 215, 215),
-              prefixIcon: Padding(
-                padding: const EdgeInsets.only(
-                  left: 8,
-                ),
-                child: Icon(
-                  Icons.lock,
-                  color: Colors.green,
-                ),
-              ),
-              hintText: 'Password',
-              suffixIcon: IconButton(
-                onPressed: () {
-                  visiblePassword();
-                },
-                icon: showPassword
-                    ? Icon(Icons.visibility)
-                    : Icon(
-                        Icons.visibility_off,
-                      ),
-              ),
+              borderSide: BorderSide.none,
             ),
-            validator: (value) {
-              return (value == null || value.isEmpty)
-                  ? 'Please enter password'
-                  : null;
-            },
-          ),
-        ),
-      );
-    }
-
-    Widget loginWith(String icons) {
-      return InkWell(
-        onTap: () {},
-        child: Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            color: Colors.white70,
-            borderRadius: BorderRadius.circular(
-              20,
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 0,
             ),
-          ),
-          child: Image.asset(
-            "$icons",
+            prefixIcon: Icon(
+              Icons.lock,
+              color: Colors.grey,
+            ),
+            suffixIcon: IconButton(
+              onPressed: () {
+                showPassword();
+              },
+              icon: _password
+                  ? Icon(Icons.visibility)
+                  : Icon(Icons.visibility_off),
+            ),
+            hintText: 'password',
+            hintStyle: TextStyle(
+              color: Color.fromARGB(255, 200, 198, 198),
+            ),
           ),
         ),
       );
     }
 
     Widget buttonLogin() {
-      return Padding(
-        padding: const EdgeInsets.only(
-          top: 20,
-        ),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7,
-          height: 50,
-          child: ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                String user = userControl.text;
-                String password = passwordControl.text;
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("Username: $user and Password:$password."),
-                  ),
-                );
-              } else {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (c) => mainPage(),
-                  ),
-                );
-              }
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                Colors.green,
-              ),
-            ),
-            child: Text(
-              "Login",
-              style: TextStyle(
-                fontSize: 22,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+      return Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: 50,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+              10,
+            )),
+            backgroundColor: Color.fromARGB(255, 0, 0, 0),
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => mainPage()),
+            );
+          },
+          child: Text(
+            'Login',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
         ),
@@ -177,90 +118,110 @@ class _loginPageState extends State<loginPage> {
     }
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(245, 196, 196, 196),
       body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Stack(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 300,
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                    ),
+              Image.asset(
+                "assets/icons/123.png",
+                width: 120,
+                height: 120,
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              emailText(),
+              SizedBox(
+                height: 10,
+              ),
+              passwordText(),
+              SizedBox(
+                height: 20,
+              ),
+              buttonLogin(),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'OR',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 249, 183, 1),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 180,
-                      left: 50,
-                    ),
-                    child: Text(
-                      'Let`s Start with Login!',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/icons/gg.png",
+                        width: 30,
+                        height: 30,
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 240,
-                    ),
-                    child: Center(
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            height: 350,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                8,
-                              ),
-                            ),
-                            child: Column(
-                              children: [
-                                UserText(),
-                                Password(),
-                                buttonLogin(),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text("Login with"),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    loginWith("assets/icons/g.png"),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    loginWith("assets/icons/f.png"),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    loginWith("assets/icons/t.png"),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
+                      Text(
+                        'Google',
+                      ),
+                    ],
                   ),
-                ],
-              )
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/icons/ff.png",
+                        width: 30,
+                        height: 30,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Facebook',
+                      ),
+                    ],
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 59, 230, 65),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(
+          Icons.app_registration,
+        ),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
     );
   }
 }
